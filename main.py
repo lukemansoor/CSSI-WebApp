@@ -11,7 +11,7 @@ class MainPage(webapp2.RequestHandler):
 class SecretPage(webapp2.RequestHandler):
     def get(self): #get requests
         self.response.headers['Content-Type'] = 'text/html'
-        self.response.write('<h1 style ="background-color=blue>This is my secret page</h1>')
+        self.response.write('<h1 style ="background-color=blue;">This is my secret page</h1>')
 
 
 # the app configuration section
