@@ -6,7 +6,7 @@ import os
 
 # this initializes the jinja2 environment
 the_jinja_env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(_file)),
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja.ext.autoescape'],
     autoescape=True)
 
