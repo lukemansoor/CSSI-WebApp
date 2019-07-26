@@ -1,6 +1,7 @@
 #main.py
 # the import section
 import webapp2
+import jinja2
 
 # the handler section
 class MainPage(webapp2.RequestHandler):
