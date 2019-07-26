@@ -7,7 +7,7 @@ import os
 # this initializes the jinja2 environment
 the_jinja_env = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja.ext.autoescape'],
+    extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
 # the handler section
@@ -18,7 +18,7 @@ class MainPage(webapp2.RequestHandler):
 
 class SecretPage(webapp2.RequestHandler):
     def get(self): #get requests
-        welcome_template = the_jinja_env.get_template(templates/'welcome.html')
+        welcome_template = the_jinja_env.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
 # the app configuration section
