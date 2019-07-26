@@ -17,4 +17,5 @@ class SecretPage(webapp2.RequestHandler):
 # the app configuration section
 app = webapp2.WSGIApplication([
     ('/', MainPage), #this maps the root url to the Main Page Handler
+    ('/secret', SecretPage),
 ], debug=True)
