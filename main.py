@@ -4,8 +4,8 @@ import webapp2
 import jinja2
 import io
 import os
-from google.cloud import vision
-from google.cloud.vision import types
+'''from google.cloud import vision
+from google.cloud.vision import types'''
 
 # this initializes the jinja2 environment
 the_jinja_env = jinja2.Environment(
