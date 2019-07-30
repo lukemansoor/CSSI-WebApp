@@ -1,10 +1,10 @@
-var video = document.getElementById('video');
-
-if (navigator.mediaDevices && navigator.mediaDevices.getUsrMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-                video.srcObject = stream;
-                video.play();
-        });
+function hasGetUserMedia() {
+        return !!(navigator.mediaDevices &&
+                navigator.mediaDevices.getUserMedia);
 }
 
-
+if (hasGetUersMedia()) {
+        //we gucci
+} else {
+        alert('getUserMedia() is not supported by your browser');
+}

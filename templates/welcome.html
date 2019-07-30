@@ -9,9 +9,18 @@
         <body> 
 
                 <div id="camera">
-                        <video id="video" width="640" height="480" autoplay></video>
-                        <button id="snap">Take Photo</button>
-                        <canvas id="canvas" width="640" height="480"></canvas>
+                        <video autoplay></video>
+
+                <script>
+                const constraints = {
+                        video: true
+                };
+                
+                const video = document.querySelector('video');
+
+                nevigator. mediaDevices.getUserMedia(constraints).
+                    then((stream) => {video.srcObject = stream});
+                </script>
                 </div>
 
                 <div id="searchParameters">
