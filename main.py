@@ -44,9 +44,18 @@ the_jinja_env = jinja2.Environment(
 
 class RecipeFinder(webapp2.RequestHandler):
     def get(self):
-        endpoint_url='https://api.spoonacular.com/recipes/search?query=' + searchquery + '?apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'
+        recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query='+searchquery+'&numer=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'
+        recipe_id_response=urlfetch.fetch(recipe_id_endpoint_url).content
+        recipe_id_as_json=json.loads(recipe_id_response)
+        id_result=recipe_id_as_json['results'][0]
+        recipe_id=id_result['id']
         
-    
+        recipe_endpoint_url='https://api.spoonacular.com/recipes/'+recipe_id+'ingredientWidget.json'
+        recipe_response=urlfetch.fetch(recipe_endpoint_url).content
+        recipe_as_json=json.loads(recipe_response)
+        recipe_result=recipe_as_json['ingredients']
+        recipe=recipe_result
+        
 # the handler section
 class MainPage(webapp2.RequestHandler):
     def get(self): #for a get request
