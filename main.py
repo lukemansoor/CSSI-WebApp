@@ -41,10 +41,12 @@ the_jinja_env = jinja2.Environment(
             print(label.description)
         # [END vision_quickstart]
 '''
+searchquery="Burger"
+
 
 class RecipeFinder(webapp2.RequestHandler):
     def get(self):
-        recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query='+searchquery+'&numer=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'
+        recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query={}&numer=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(searchquery)
         recipe_id_response=urlfetch.fetch(recipe_id_endpoint_url).content
         recipe_id_as_json=json.loads(recipe_id_response)
         id_result=recipe_id_as_json['results'][0]
@@ -55,6 +57,8 @@ class RecipeFinder(webapp2.RequestHandler):
         recipe_as_json=json.loads(recipe_response)
         recipe_result=recipe_as_json['ingredients']
         recipe=recipe_result
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.write('recipe')
         
 # the handler section
 class MainPage(webapp2.RequestHandler):
@@ -71,4 +75,5 @@ class SecretPage(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainPage), #this maps the root url to the Main Page Handler
     ('/secret', SecretPage),
+    ('/recipe', RecipeFinder),
     ], debug=True)
