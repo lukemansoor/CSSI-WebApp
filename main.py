@@ -6,7 +6,6 @@ import jinja2
 import io
 import os
 import json
-
 from google.appengine.api import urlfetch
 '''
 from google.cloud import vision
@@ -66,11 +65,7 @@ class RecipeFinder(webapp2.RequestHandler):
             self.response.headers['Content-Type'] = 'text/html'
             self.response.write(i['name'] + " " + str(i['amount']['metric']['value']) + i['amount']['metric']['unit'])
             self.response.write("<br />\n")
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 7229ce0ba028438025938d56db1ff790282b0638
         recipe_endpoint_url='https://api.spoonacular.com/recipes/{}/analyzedInstructions?apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(recipe_id)
         recipe_response=urlfetch.fetch(recipe_endpoint_url).content
         recipe_as_json=json.loads(recipe_response)
@@ -79,12 +74,7 @@ class RecipeFinder(webapp2.RequestHandler):
             self.response.headers['Content-Type'] = 'text/html'
             self.response.write(i['step'])
             self.response.write("<br />\n")
-<<<<<<< HEAD
-        
-=======
 
-
->>>>>>> 7229ce0ba028438025938d56db1ff790282b0638
 # the handler section
 class MainPage(webapp2.RequestHandler):
     def get(self): #for a get request
