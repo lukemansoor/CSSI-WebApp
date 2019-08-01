@@ -7,29 +7,32 @@
         </head> 
 
         <body> 
-
-                <div id="camera">
-                        <video autoplay></video>
-
-                <script>
-                const constraints = {
-                        video: true
-                };
-                
-                const video = document.querySelector('video');
-
-                nevigator. mediaDevices.getUserMedia(constraints).
-                    then((stream) => {video.srcObject = stream});
-                </script>
+        <div id="body">
+                <p class="photoPrompt"> Give us a picture of a delicious meal and we'll tell you how to make it <p>
+                <div id="photoSelect">
+                    <input type="file" accept="image/*" id="photo" class="photo"> 
                 </div>
+
+<br><br><br><br><br><br>
 
                 <div id="searchParameters">
-                <p> this is the list of options for vegans or other idiots </p> 
+                    <p class="options"> Looking for something specific? <p>
+                    <select multiple size="3" id="parameters">
+                            <option value="vegan">Vegan</option>
+                            <option value="dairyFree">Dairy Free</option>
+                            <option value="noNuts">No Nuts</option>
+                    </select>
+                    <p class="options2"> (CTRL + click to select multiple) <p>
                 </div>
 
-                <input class="button" id="button" type="button" value="Search"></input>
-                <script src="script.js" type="text/javascript"></script>
+<br><br><br><br><br>
+
+               <input class="button" id="button" type="button" value="Search"></input> 
+        </div>
         </body> 
 </html> 
+
+
+
 
 

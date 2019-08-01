@@ -3,7 +3,7 @@ function hasGetUserMedia() {
                 navigator.mediaDevices.getUserMedia);
 }
 
-if (hasGetUersMedia()) {
+if (hasGetUserMedia()) {
         //we gucci
 } else {
         alert('getUserMedia() is not supported by your browser');
