@@ -46,20 +46,32 @@ searchquery="Burger"
 
 class RecipeFinder(webapp2.RequestHandler):
     def get(self):
-        recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query={}&numer=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(searchquery)
+        recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query={}&number=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(searchquery)
         recipe_id_response=urlfetch.fetch(recipe_id_endpoint_url).content
         recipe_id_as_json=json.loads(recipe_id_response)
         id_result=recipe_id_as_json['results'][0]
         recipe_id=id_result['id']
-        
-        recipe_endpoint_url='https://api.spoonacular.com/recipes/'+recipe_id+'ingredientWidget.json'
+
+        #the variable recipe_id is the id that should be passed onto the endpoint url to recieve data for the ingredients and such 
+        ingredient_endpoint_url='https://api.spoonacular.com/recipes/{}/ingredientWidget.json?apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(recipe_id)
+        ingredient_response=urlfetch.fetch(ingredient_endpoint_url).content
+        ingredient_as_json=json.loads(ingredient_response)
+        #this following for loop is used to make sure the api request returns the necessary values 
+        for i in ingredient_as_json['ingredients']:
+            self.response.headers['Content-Type'] = 'text/html'
+            self.response.write(i['name'] + " " + str(i['amount']['metric']['value']) + i['amount']['metric']['unit'])
+            self.response.write("<br />\n")
+
+        recipe_endpoint_url='https://api.spoonacular.com/recipes/{}/analyzedInstructions?apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(recipe_id)
         recipe_response=urlfetch.fetch(recipe_endpoint_url).content
         recipe_as_json=json.loads(recipe_response)
-        recipe_result=recipe_as_json['ingredients']
-        recipe=recipe_result
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.write('recipe')
-        
+        test= recipe_as_json[0]['steps']
+        for i in test:
+            self.response.headers['Content-Type'] = 'text/html'
+            self.response.write(i['step'])
+            self.response.write("<br />\n")
+
+
 # the handler section
 class MainPage(webapp2.RequestHandler):
     def get(self): #for a get request
