@@ -50,6 +50,9 @@ searchquery="Burger"
 
 class RecipeFinder(webapp2.RequestHandler):
     def get(self):
+        welcome_template = the_jinja_env.get_template('templates/welcome.html')
+        self.response.write(welcome_template.render())
+
         recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query={}&number=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(searchquery)
         recipe_id_response=urlfetch.fetch(recipe_id_endpoint_url).content
         recipe_id_as_json=json.loads(recipe_id_response)
