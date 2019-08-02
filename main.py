@@ -13,9 +13,9 @@ from google.cloud.vision import types
 '''
 # this initializes the jinja2 environment
 the_jinja_env = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
+        loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+        extensions=['jinja2.ext.autoescape'],
+        autoescape=True)
 
 '''class run_quickstart(webapp2.RequestHandler):
     def get(self):
@@ -45,20 +45,18 @@ the_jinja_env = jinja2.Environment(
             print(label.description)
         # [END vision_quickstart]
 '''
-searchquery="Burger"
-
-
+searchquery = ""
 class RecipeFinder(webapp2.RequestHandler):
     def get(self):
+        #TEST CASE FOR SEARCHQUERY
+        #print(searchquery)
         welcome_template = the_jinja_env.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
-
         recipe_id_endpoint_url='https://api.spoonacular.com/recipes/search?query={}&number=1&apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(searchquery)
         recipe_id_response=urlfetch.fetch(recipe_id_endpoint_url).content
         recipe_id_as_json=json.loads(recipe_id_response)
         id_result=recipe_id_as_json['results'][0]
         recipe_id=id_result['id']
-
         #the variable recipe_id is the id that should be passed onto the endpoint url to recieve data for the ingredients and such 
         ingredient_endpoint_url='https://api.spoonacular.com/recipes/{}/ingredientWidget.json?apiKey=97d098f7ed6849a5bf2377f5bc2cbfbf'.format(recipe_id)
         ingredient_response=urlfetch.fetch(ingredient_endpoint_url).content
@@ -89,9 +87,26 @@ class SecretPage(webapp2.RequestHandler):
         welcome_template = the_jinja_env.get_template('templates/welcome.html')
         self.response.write(welcome_template.render())
 
+class BlogHandler(webapp2.RequestHandler):
+    def get(self):
+        template = the_jinja_env.get_template('templates/welcome.html')
+        self.response.write(template.render())
+    def post(self):
+        searchquery  = self.request.get('foodName')
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.write(searchquery)
+        if searchquery != "" :
+            template_vars = {
+                'foodName': searchquery,
+            }
+            #testcases
+            template = the_jinja_env.get_template('templates/welcome.html')
+            self.response.write(template.render(template_vars))
+            RecipeFinder.get()
 # the app configuration section
 app = webapp2.WSGIApplication([
     ('/', MainPage), #this maps the root url to the Main Page Handler
     ('/secret', SecretPage),
     ('/recipe', RecipeFinder),
+    ('/recipe2', BlogHandler),
     ], debug=True)
